@@ -1,0 +1,29 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+input, textarea, button, select {
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+#edit-modal {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  z-index: 1000;
+}

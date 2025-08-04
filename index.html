@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Customer Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Customer Manager</h1>
+  <button id="logout-btn">Logout</button>
+
+  <form id="customer-form">
+    <input type="text" id="name" placeholder="Full Name" required />
+    <input type="email" id="email" placeholder="Email (optional)" />
+    
+    <div id="phones-container">
+      <input type="text" class="phone-input" placeholder="Phone (required)" required />
+    </div>
+    <button type="button" id="add-phone-btn">Add Phone</button>
+
+    <div id="addresses-container">
+      <input type="text" class="address-input" placeholder="Address" />
+      <input type="text" class="location-input" placeholder="Location Link" />
+    </div>
+    <button type="button" id="add-address-btn">Add Address</button>
+
+    <textarea id="notes" placeholder="Notes"></textarea>
+    <button type="submit">Add Customer</button>
+  </form>
+
+  <input type="text" id="search" placeholder="Search customers..." />
+  <label>Sort:
+    <select id="sort-by">
+      <option value="created_at">Date</option>
+      <option value="full_name">Name</option>
+    </select>
+    <select id="sort-dir">
+      <option value="desc">↓</option>
+      <option value="asc">↑</option>
+    </select>
+  </label>
+
+  <ul id="customer-list"></ul>
+
+  <div id="pagination">
+    <button id="prev-page">← Prev</button>
+    <span id="page-info"></span>
+    <button id="next-page">Next →</button>
+  </div>
+
+  <!-- Edit Modal -->
+  <div id="edit-modal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#fff; border:1px solid #ccc; padding:1rem; max-width:400px; z-index:1000;">
+    <form id="edit-form">
+      <h3>Edit Customer</h3>
+      <input type="text" id="edit-name" placeholder="Full Name" required />
+      <input type="email" id="edit-email" placeholder="Email (optional)" />
+      
+      <div id="edit-phones-container"></div>
+      <button type="button" id="edit-add-phone-btn">Add Phone</button>
+
+      <div id="edit-addresses-container"></div>
+      <button type="button" id="edit-add-address-btn">Add Address</button>
+
+      <textarea id="edit-notes" placeholder="Notes"></textarea>
+      <button type="submit">Save</button>
+      <button type="button" id="edit-cancel-btn">Cancel</button>
+    </form>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
