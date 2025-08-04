@@ -1,7 +1,7 @@
 import { createClient } from 'https://cdn.skypack.dev/@supabase/supabase-js'
 
-const supabaseUrl = SUPABASE_URL
-const supabaseKey = SUPABASE_ANON_KEY
+const supabaseUrl = 'https://qrhnpkevamaemqqdslbg.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFyaG5wa2V2YW1hZW1xcWRzbGJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQzMDU1MDksImV4cCI6MjA2OTg4MTUwOX0.C4usS58nmKgCblDoTY77mdwhbjHaugJtJCkV2lx4IOM'
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 const loginForm = document.getElementById('login-form')
