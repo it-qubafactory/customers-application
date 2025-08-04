@@ -51,9 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.createElement('input')
     input.type = 'text'
     input.placeholder = 'Phone (required)'
-    input.classList.add('phone-input')
+    input.classList.add('phone-input', 'form-control', 'mb-2')
     input.required = true
-    phonesContainer.appendChild(input)
+    phonesContainer.insertBefore(input, addPhoneBtn)
   }
 
   // Add new address inputs (add customer form)
@@ -61,15 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const addressInput = document.createElement('input')
     addressInput.type = 'text'
     addressInput.placeholder = 'Address'
-    addressInput.classList.add('address-input')
+    addressInput.classList.add('address-input', 'form-control', 'mb-2')
 
     const locationInput = document.createElement('input')
     locationInput.type = 'text'
     locationInput.placeholder = 'Location Link'
-    locationInput.classList.add('location-input')
+    locationInput.classList.add('location-input', 'form-control', 'mb-2')
 
-    addressesContainer.appendChild(addressInput)
-    addressesContainer.appendChild(locationInput)
+    addressesContainer.insertBefore(addressInput, addAddressBtn)
+    addressesContainer.insertBefore(locationInput, addAddressBtn)
   }
 
   // Add customer
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
     totalCustomers = count || 0
 
     if (!data || data.length === 0) {
-      customerList.innerHTML = '<li>No customers found.</li>'
+      customerList.innerHTML = '<li class="list-group-item">No customers found.</li>'
       pageInfo.textContent = `Page ${currentPage + 1} of 1`
       return
     }
@@ -248,6 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
     customerList.innerHTML = ''
     for (const cust of data) {
       const li = document.createElement('li')
+      li.classList.add('list-group-item')
       li.innerHTML = `
         <strong>${cust.full_name}</strong> <br/>
         ${cust.email ? `Email: ${cust.email}<br/>` : ''}
@@ -257,10 +258,10 @@ document.addEventListener('DOMContentLoaded', () => {
         </ul>
         Addresses:<br/>
         <ul>
-          ${cust.addresses.map(a => `<li>${a.address}${a.location ? ` (<a href="${a.location}" target="_blank">Location</a>)` : ''}</li>`).join('')}
+          ${cust.addresses.map(a => `<li>${a.address}${a.location ? ` (<a href="${a.location}" target="_blank" rel="noopener noreferrer">Location</a>)` : ''}</li>`).join('')}
         </ul>
-        <button data-id="${cust.id}" class="edit-btn">Edit</button>
-        <button data-id="${cust.id}" class="delete-btn">Delete</button>
+        <button data-id="${cust.id}" class="btn btn-sm btn-primary edit-btn me-2">Edit</button>
+        <button data-id="${cust.id}" class="btn btn-sm btn-danger delete-btn">Delete</button>
       `
       customerList.appendChild(li)
     }
@@ -318,115 +319,187 @@ document.addEventListener('DOMContentLoaded', () => {
           const input = document.createElement('input')
           input.type = 'text'
           input.value = phone.phone
-          input.classList.add('phone-input')
+          input.classList.add('phone-input', 'form-control', 'mb-2')
           input.dataset.phoneId = phone.id
           editPhonesContainer.appendChild(input)
         }
+        if (data.phones.length === 0) {
+          // At least one empty phone input
+          const input = document.createElement('input')
+          input.type = 'text'
+          input.placeholder = 'Phone (required)'
+          input.classList.add('phone-input', 'form-control', 'mb-2')
+          editPhonesContainer.appendChild(input)
+        }
+        editPhonesContainer.appendChild(editAddPhoneBtn)
 
         editAddressesContainer.innerHTML = ''
         for (const addr of data.addresses) {
-          const addrInput = document.createElement('input')
-          addrInput.type = 'text'
-          addrInput.value = addr.address
-          addrInput.classList.add('address-input')
-          addrInput.dataset.addressId = addr.id
+          const addressInput = document.createElement('input')
+          addressInput.type = 'text'
+          addressInput.value = addr.address
+          addressInput.classList.add('address-input', 'form-control', 'mb-2')
+          addressInput.dataset.addressId = addr.id
 
-          const locInput = document.createElement('input')
-          locInput.type = 'text'
-          locInput.value = addr.location || ''
-          locInput.classList.add('location-input')
+          const locationInput = document.createElement('input')
+          locationInput.type = 'text'
+          locationInput.value = addr.location || ''
+          locationInput.classList.add('location-input', 'form-control', 'mb-2')
 
-          editAddressesContainer.appendChild(addrInput)
-          editAddressesContainer.appendChild(locInput)
+          editAddressesContainer.appendChild(addressInput)
+          editAddressesContainer.appendChild(locationInput)
         }
+        if (data.addresses.length === 0) {
+          const addressInput = document.createElement('input')
+          addressInput.type = 'text'
+          addressInput.placeholder = 'Address'
+          addressInput.classList.add('address-input', 'form-control', 'mb-2')
+
+          const locationInput = document.createElement('input')
+          locationInput.type = 'text'
+          locationInput.placeholder = 'Location Link'
+          locationInput.classList.add('location-input', 'form-control', 'mb-2')
+
+          editAddressesContainer.appendChild(addressInput)
+          editAddressesContainer.appendChild(locationInput)
+        }
+        editAddressesContainer.appendChild(editAddAddressBtn)
+
+        editModal.style.display = 'block'
+        editModal.setAttribute('aria-hidden', 'false')
+        editModal.setAttribute('aria-modal', 'true')
 
         editForm.dataset.customerId = customerId
-        editModal.style.display = 'block'
       }
     })
   }
 
-  // Edit modal add phone
+  // Add phone input (edit form)
   editAddPhoneBtn.onclick = () => {
     const input = document.createElement('input')
     input.type = 'text'
-    input.placeholder = 'Phone'
-    input.classList.add('phone-input')
-    editPhonesContainer.appendChild(input)
+    input.placeholder = 'Phone (required)'
+    input.classList.add('phone-input', 'form-control', 'mb-2')
+    editPhonesContainer.insertBefore(input, editAddPhoneBtn)
   }
 
-  // Edit modal add address
+  // Add address inputs (edit form)
   editAddAddressBtn.onclick = () => {
     const addressInput = document.createElement('input')
     addressInput.type = 'text'
     addressInput.placeholder = 'Address'
-    addressInput.classList.add('address-input')
+    addressInput.classList.add('address-input', 'form-control', 'mb-2')
 
     const locationInput = document.createElement('input')
     locationInput.type = 'text'
     locationInput.placeholder = 'Location Link'
-    locationInput.classList.add('location-input')
+    locationInput.classList.add('location-input', 'form-control', 'mb-2')
 
-    editAddressesContainer.appendChild(addressInput)
-    editAddressesContainer.appendChild(locationInput)
+    editAddressesContainer.insertBefore(addressInput, editAddAddressBtn)
+    editAddressesContainer.insertBefore(locationInput, editAddAddressBtn)
   }
 
-  // Edit modal cancel button
+  // Cancel edit
   editCancelBtn.onclick = () => {
     editModal.style.display = 'none'
+    editModal.setAttribute('aria-hidden', 'true')
+    editModal.removeAttribute('aria-modal')
   }
 
-  // Edit modal submit
-  editForm.addEventListener('submit', async (e) => {
+  // Save edit
+  editForm.onsubmit = async (e) => {
     e.preventDefault()
     const customerId = editForm.dataset.customerId
-    const full_name = editNameInput.value.trim()
-    const email = editEmailInput.value.trim()
-    const notes = editNotesInput.value.trim()
+    if (!customerId) return alert('No customer selected.')
 
     const {
       data: { user },
       error: userError
     } = await supabase.auth.getUser()
     if (userError || !user) {
-      alert('You must be logged in to edit.')
+      alert('Please log in first.')
+      window.location.href = 'login.html'
       return
     }
 
-    const { error: custError } = await supabase
-      .from('customers')
-      .update({ full_name, email, modified_by: user.id, notes })
-      .eq('id', customerId)
-
-    if (custError) {
-      alert('Error updating customer: ' + custError.message)
-      return
-    }
+    const full_name = editNameInput.value.trim()
+    const email = editEmailInput.value.trim() || null
 
     const phoneInputs = [...editPhonesContainer.querySelectorAll('.phone-input')]
-    for (const input of phoneInputs) {
-      const phoneId = input.dataset.phoneId
-      const phone = input.value.trim()
-      if (phoneId) {
-        await supabase.from('phones').update({ phone, modified_by: user.id }).eq('id', phoneId)
+    const phones = phoneInputs.map(i => i.value.trim()).filter(v => v !== '')
+    if (phones.length === 0) {
+      alert('At least one phone is required.')
+      return
+    }
+
+    const addressInputs = [...editAddressesContainer.querySelectorAll('.address-input')]
+    const locationInputs = [...editAddressesContainer.querySelectorAll('.location-input')]
+    let addresses = []
+    for (let i = 0; i < addressInputs.length; i++) {
+      const addr = addressInputs[i].value.trim()
+      const loc = locationInputs[i]?.value.trim() || null
+      if (addr !== '') {
+        addresses.push({ address: addr, location: loc })
       }
     }
 
-    const addrInputs = [...editAddressesContainer.querySelectorAll('.address-input')]
-    const locInputs = [...editAddressesContainer.querySelectorAll('.location-input')]
-    for (let i = 0; i < addrInputs.length; i++) {
-      const id = addrInputs[i].dataset.addressId
-      const address = addrInputs[i].value.trim()
-      const location = locInputs[i].value.trim()
-      if (id) {
-        await supabase.from('addresses').update({ address, location, modified_by: user.id }).eq('id', id)
-      }
-    }
+    const notes = editNotesInput.value.trim() || null
 
-    alert('Customer updated successfully!')
-    editModal.style.display = 'none'
-    loadCustomers()
-  })
+    try {
+      // Update customer
+      const { error: custError } = await supabase
+        .from('customers')
+        .update({
+          full_name,
+          email,
+          modified_by: user.id,
+          notes
+        })
+        .eq('id', customerId)
+      if (custError) throw custError
+
+      // Replace phones
+      let { error } = await supabase.from('phones').delete().eq('customer_id', customerId)
+      if (error) throw error
+
+      for (const phone of phones) {
+        const { error: phError } = await supabase
+          .from('phones')
+          .insert({
+            customer_id: customerId,
+            phone,
+            created_by: user.id,
+            modified_by: user.id,
+          })
+        if (phError) throw phError
+      }
+
+      // Replace addresses
+      ({ error } = await supabase.from('addresses').delete().eq('customer_id', customerId))
+      if (error) throw error
+
+      for (const addr of addresses) {
+        const { error: addrError } = await supabase
+          .from('addresses')
+          .insert({
+            customer_id: customerId,
+            address: addr.address,
+            location: addr.location,
+            created_by: user.id,
+            modified_by: user.id,
+          })
+        if (addrError) throw addrError
+      }
+
+      alert('Customer updated successfully!')
+      editModal.style.display = 'none'
+      editModal.setAttribute('aria-hidden', 'true')
+      editModal.removeAttribute('aria-modal')
+      loadCustomers()
+    } catch (error) {
+      alert('Error updating customer: ' + error.message)
+    }
+  }
 
   // Initial load
   loadCustomers()
