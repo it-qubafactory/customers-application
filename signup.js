@@ -13,8 +13,8 @@ signupForm.addEventListener('submit', async (e) => {
   signupBtn.disabled = true
   msg.textContent = '⏳ Signing up...'
 
-  const email = document.getElementById('email').value
-  const password = document.getElementById('password').value
+  const email = document.getElementById('signup-email').value
+  const password = document.getElementById('signup-password').value
 
   try {
     const { data, error } = await supabase.auth.signUp({ email, password })

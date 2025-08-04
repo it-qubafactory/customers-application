@@ -13,8 +13,8 @@ loginForm.addEventListener('submit', async (e) => {
   loginBtn.disabled = true
   msg.textContent = '⏳ Logging in...'
 
-  const email = document.getElementById('email').value
-  const password = document.getElementById('password').value
+  const email = document.getElementById('login-email').value
+  const password = document.getElementById('login-password').value
 
   try {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
