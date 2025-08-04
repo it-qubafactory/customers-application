@@ -42,7 +42,7 @@ let lastSortDir = 'desc'
 // Logout
 logoutBtn.onclick = async () => {
   await supabase.auth.signOut()
-  window.location.href = '/login.html'
+  window.location.href = 'login.html'
 }
 
 // Add new phone input (add customer form)
@@ -81,7 +81,7 @@ customerForm.onsubmit = async (e) => {
   } = await supabase.auth.getUser()
   if (userError || !user) {
     alert('Please log in first.')
-    window.location.href = '/login.html'
+    window.location.href = 'login.html'
     return
   }
 
@@ -194,7 +194,7 @@ async function loadCustomers() {
     error: userError
   } = await supabase.auth.getUser()
   if (userError || !user) {
-    window.location.href = '/login.html'
+    window.location.href = 'login.html'
     return
   }
 
