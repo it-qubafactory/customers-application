@@ -258,18 +258,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const li = document.createElement('li')
       li.classList.add('list-group-item')
       li.innerHTML = `
-        <strong>${cust.full_name}</strong> <br/>
-        ${cust.email ? `Email: ${cust.email}<br/>` : ''}
-        Phones:<br/>
-        <ul>
-          ${cust.phones.map(p => `<li>${p.phone} ${p.label ? '(' + p.label + ')' : ''}</li>`).join('')}
-        </ul>
-        Addresses:<br/>
-        <ul>
-          ${cust.addresses.map(a => `<li>${a.address}${a.location ? ` (<a href="${a.location}" target="_blank" rel="noopener noreferrer">Location</a>)` : ''}</li>`).join('')}
-        </ul>
-        <button data-id="${cust.id}" class="btn btn-sm btn-primary edit-btn me-2">Edit</button>
-        <button data-id="${cust.id}" class="btn btn-sm btn-danger delete-btn">Delete</button>
+          ${cust.notes ? `<div class="text-muted fst-italic mb-1">${cust.notes}</div>` : ''}
+          <strong>${cust.full_name}</strong> <br/>
+          ${cust.email ? `Email: ${cust.email}<br/>` : ''}
+          Phones:<br/>
+          <ul>
+            ${cust.phones.map(p => `<li>${p.phone} ${p.label ? '(' + p.label + ')' : ''}</li>`).join('')}
+          </ul>
+          Addresses:<br/>
+          <ul>
+            ${cust.addresses.map(a => `<li>${a.address}${a.location ? ` (<a href="${a.location}" target="_blank" rel="noopener noreferrer">Location</a>)` : ''}</li>`).join('')}
+          </ul>
+          <button data-id="${cust.id}" class="btn btn-sm btn-primary edit-btn me-2">Edit</button>
+          <button data-id="${cust.id}" class="btn btn-sm btn-danger delete-btn">Delete</button>
       `
       customerList.appendChild(li)
     }
